@@ -1,38 +1,59 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+.box {
+	display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+	font-family: 'Roboto', sans-serif;
+	color: #212121;
 }
 
-.App-link {
-  color: #61dafb;
+.formResa{
+  display : flex;
+  flex-direction: column;
+  justify-content: space-around;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.areaBouton {
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+}
+
+.inputResa {
+  box-sizing: border-box;
+	font-size: 20px;
+	padding: 5px;
+	border: 5px solid #FF8054;
+	background-color: #fff;
+	border-width: 0 0 5px 0;
+	outline: none;
+  margin: 10px auto;
+
+}
+
+.boutonResa {
+  background-color: #FF8054;
+  border-radius: 2px;
+  padding : 10px 20px;
+  color : white;
+  font-size: 20px;
+  cursor: pointer;
+  margin :  auto
+}
+
+.eventButton{
+  background-color: #3B80FF;
+  border-radius: 2px;
+  padding : 10px 20px;
+  color : white;
+  font-size: 20px;
+  cursor: pointer;
+  margin :  auto
+}
+
+.eventButton:hover{
+  border : 2px solid red;
 }
