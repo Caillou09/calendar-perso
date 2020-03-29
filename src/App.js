@@ -13,17 +13,6 @@ class App extends Component {
     }
   }
 
-  callApi() {
-  fetch('http://localhost:9000/testApi')
-    .then(res => res.text())
-    .then(res => this.setState({apiResponse: res}))
-  }
-
-  componentWillMount() {
-    this.callApi()
-  }
-
-
   handleSubmit = (event) => {
     event.preventDefault()
     console.log('prout')
