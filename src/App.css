@@ -46,6 +46,7 @@
 
 .eventButton{
   background-color: #3B80FF;
+	border : 2px solid transparent;
   border-radius: 2px;
   padding : 10px 20px;
   color : white;
@@ -55,5 +56,9 @@
 }
 
 .eventButton:hover{
-  border : 2px solid red;
+  border : 2px solid #FF8054;
+}
+
+.eventButton:active {
+	border : 2px solid #FF8054;
 }
