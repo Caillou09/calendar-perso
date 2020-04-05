@@ -9,7 +9,7 @@ exports.handler = async(event, context) => {
     process.env.CLIENT_EMAIL,
     null,
     process.env.PRIVATE_KEY,
-    ['https://www.googleapis.com/auth/calendar.readonly']
+    ['https://www.googleapis.com/auth/calendar']
   );
 
   const calendar = google.calendar({

@@ -3,13 +3,22 @@ import './App.css';
 
 import BoutonResa from './components/BoutonResa'
 
+
+
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiResponse:'',
-      email:''
+      bookButton:'Je choisis ce créneau',
+      events: {}
     }
+  }
+
+  componentDidMount() {
+    fetch("/.netlify/functions/authentify")
+      .then(response => response.json())
+      .then(data => this.setState({ events : data.test.items }))
   }
 
   handleSubmit = (event) => {
@@ -23,13 +32,23 @@ class App extends Component {
   }
 
   render() {
+    const eventCards = Object.entries(this.state.events)
+     for (let [key, value] of eventCards) {
+       console.log(key, value)
+     }
+
+    //   .map(key => {
+    //     return(
+    //       <BoutonResa key={key} details={this.state.events[key]}></BoutonResa>
+    //     )
+    //   })
+
     return (
       <div className='box'>
         <div>
           <h2>Réservez un créneau avec Nicolas de Smile</h2>
         </div>
         <div >
-          <BoutonResa></BoutonResa>
         </div>
         <div >
           <form
