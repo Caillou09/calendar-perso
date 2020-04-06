@@ -11,19 +11,37 @@ class App extends Component {
     super(props);
     this.state = {
       bookButton:'Je choisis ce créneau',
-      events: {}
+      events: null,
+      isLoaded : false,
+      card : ''
     }
   }
 
-  componentDidMount() {
+ componentDidMount() {
     fetch("/.netlify/functions/authentify")
       .then(response => response.json())
-      .then(data => this.setState({ events : data.test.items }))
+      .then(
+        (data) => {
+          this.setState({
+            events : data.test,
+            isLoaded : true
+          })
+          // console.log(data.test)
+        },
+
+        (error) => {
+          this.setState({
+            isLoaded : true,
+            error
+          })
+        }
+    )
+
   }
+
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('prout')
   }
 
   handleChange = (event) => {
@@ -32,23 +50,28 @@ class App extends Component {
   }
 
   render() {
-    const eventCards = Object.entries(this.state.events)
-     for (let [key, value] of eventCards) {
-       console.log(key, value)
-     }
-
-    //   .map(key => {
-    //     return(
-    //       <BoutonResa key={key} details={this.state.events[key]}></BoutonResa>
-    //     )
-    //   })
+    const {error, isLoaded, events} = this.state
+    if (error) {
+      return <div>Error : {error.message}</div>
+    }
 
     return (
       <div className='box'>
         <div>
           <h2>Réservez un créneau avec Nicolas de Smile</h2>
         </div>
-        <div >
+        <div className='areaBouton'>
+        {isLoaded ? (
+          Object.keys(events).map( (keyName, i) => {
+            console.log(events[i])
+            return(
+              <BoutonResa key={i} details={events[i]}>
+              </BoutonResa>
+            )
+          })
+        ) : (
+          <p>Loading...</p>
+        )}
         </div>
         <div >
           <form

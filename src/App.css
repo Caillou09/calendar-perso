@@ -14,13 +14,30 @@
   flex-direction: column;
   justify-content: space-around;
 
+
 }
 
 .areaBouton {
   display: flex;
   flex-direction: row;
-  padding: 50px;
+	flex-wrap : wrap;
+	justify-content: center;
+	margin : 20px;
 }
+
+.card {
+	margin : 20px;
+	border-radius : 4px;
+	-webkit-box-shadow: -1px 15px 30px -12px black;
+  -moz-box-shadow: -1px 15px 30px -12px black;
+  box-shadow: -1px 15px 30px -12px black;
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	justify-content: center
+
+}
+
 
 .inputResa {
   box-sizing: border-box;
@@ -44,13 +61,20 @@
   margin :  auto
 }
 
+.eventButtonArea {
+	display: flex;
+	padding : 20px;
+	justify-content: center;
+	vertical-align: middle;
+}
+
 .eventButton{
   background-color: #3B80FF;
 	border : 2px solid transparent;
   border-radius: 2px;
   padding : 10px 20px;
   color : white;
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer;
   margin :  auto
 }
@@ -61,4 +85,21 @@
 
 .eventButton:active {
 	border : 2px solid #FF8054;
+}
+
+.date {
+	padding : 20px;
+	color : white;
+	background-color : #FF8054;
+	border-radius : 2px 0 0 0;
+	font-weight: 900;
+
+}
+
+.time {
+	padding : 20px;
+	background-color: #3B80FF;
+	color : white;
+	border-radius : 0 0 0 2px;
+	font-size : 13px
 }
