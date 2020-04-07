@@ -2,7 +2,7 @@ import React from 'react'
 
 
 
-const BoutonResa = ({details, onClick}) => {
+const BoutonResa = ({details, onClick, isActive}) => {
 
   const dateAnnee = details.start.dateTime.slice(0,3)
   const dateInfo = details.start.dateTime
@@ -16,10 +16,12 @@ const BoutonResa = ({details, onClick}) => {
   const horaireDebut = details.start.dateTime.slice(11,16)
   const horaireFin = details.end.dateTime.slice(11,16)
 
+
     return(
-      <div className ='card'>
-          <div className='date'>{dateInfo}</div>
-          <div className='time'>de {horaireDebut} à {horaireFin}</div>
+      <div className ={isActive ? 'cardActive' : 'card'} onClick={onClick}>
+
+          <div className={isActive ? 'dateActive' : 'date'}>{dateInfo}</div>
+          <div className={isActive ? 'timeActive' : 'time'}>de {horaireDebut} à {horaireFin}</div>
       </div>
     )
 

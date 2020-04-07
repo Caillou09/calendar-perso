@@ -13,7 +13,7 @@ class App extends Component {
       bookButton:'Je choisis ce créneau',
       events: null,
       isLoaded : false,
-      card : ''
+      card : '',
     }
   }
 
@@ -26,7 +26,7 @@ class App extends Component {
             events : data.test,
             isLoaded : true
           })
-          // console.log(data.test)
+          console.log(this.state.events)
         },
 
         (error) => {
@@ -49,6 +49,10 @@ class App extends Component {
     this.setState({ email })
   }
 
+  cardActive = (keyCard) => {
+    this.setState({card : keyCard})
+  }
+
   render() {
     const {error, isLoaded, events} = this.state
     if (error) {
@@ -63,9 +67,8 @@ class App extends Component {
         <div className='areaBouton'>
         {isLoaded ? (
           Object.keys(events).map( (keyName, i) => {
-            console.log(events[i])
             return(
-              <BoutonResa key={i} details={events[i]}>
+              <BoutonResa key={i} details={events[i]} onClick={ () => this.cardActive(i)} isActive={this.state.card===i ? true : false}>
               </BoutonResa>
             )
           })
