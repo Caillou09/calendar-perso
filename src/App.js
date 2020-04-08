@@ -14,6 +14,7 @@ class App extends Component {
       events: null,
       isLoaded : false,
       card : '',
+      infoCard : ''
     }
   }
 
@@ -36,9 +37,7 @@ class App extends Component {
           })
         }
     )
-
   }
-
 
   handleSubmit = (event) => {
     event.preventDefault()
@@ -49,8 +48,13 @@ class App extends Component {
     this.setState({ email })
   }
 
-  cardActive = (keyCard) => {
-    this.setState({card : keyCard})
+  cardActive = (keyCard, x, y, z) => {
+    this.setState({card : keyCard, infoCard:[x, y, z]})
+  }
+
+
+  infoChild = (paramChild) => {
+    this.setState({infoCard : paramChild})
   }
 
   render() {
@@ -68,7 +72,11 @@ class App extends Component {
         {isLoaded ? (
           Object.keys(events).map( (keyName, i) => {
             return(
-              <BoutonResa key={i} details={events[i]} onClick={ () => this.cardActive(i)} isActive={this.state.card===i ? true : false}>
+              <BoutonResa
+                key={i}
+                details={events[i]}
+                onClick={ (x, y ,z) => this.cardActive(i, x , y ,z)}
+                isActive={this.state.card===i ? true : false}>
               </BoutonResa>
             )
           })
