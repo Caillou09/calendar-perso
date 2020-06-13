@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       bookButton:'Je choisis ce créneau',
       events: null,
+      email:null,
       isLoaded : false,
       card : '',
       infoCard : ''
@@ -41,6 +42,32 @@ class App extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
+    const {email,card} = this.state
+
+    fetch("/.netlify/functions/updateCalendar", {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        card
+      })
+    })
+    //   .then(response => response.json())
+    //   .then(
+    //     (data) => {
+    //       this.setState({
+    //         events : data.test,
+    //         isLoaded : true
+    //       })
+    //       console.log(this.state.events)
+    //     },
+    //
+    //     (error) => {
+    //       this.setState({
+    //         isLoaded : true,
+    //         error
+    //       })
+    //     }
+    // )
   }
 
   handleChange = (event) => {
@@ -48,8 +75,8 @@ class App extends Component {
     this.setState({ email })
   }
 
-  cardActive = (keyCard, x, y, z) => {
-    this.setState({card : keyCard, infoCard:[x, y, z]})
+  cardActive = (card) => {
+    this.setState({card})
   }
 
 
@@ -58,7 +85,7 @@ class App extends Component {
   }
 
   render() {
-    const {error, isLoaded, events} = this.state
+    const {error, isLoaded, events,card} = this.state
     if (error) {
       return <div>Error : {error.message}</div>
     }
@@ -70,13 +97,14 @@ class App extends Component {
         </div>
         <div className='areaBouton'>
         {isLoaded ? (
-          Object.keys(events).map( (keyName, i) => {
+          (events).map((event, i) => {
+            const didClick = () => this.cardActive(event)
             return(
               <BoutonResa
-                key={i}
-                details={events[i]}
-                onClick={ (x, y ,z) => this.cardActive(i, x , y ,z)}
-                isActive={this.state.card===i ? true : false}>
+                key={event.id}
+                details={event}
+                onClick={didClick}
+                isActive={card.id===event.id}>
               </BoutonResa>
             )
           })
