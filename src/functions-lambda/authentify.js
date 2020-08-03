@@ -28,6 +28,6 @@ exports.handler = async(event, context) => {
 
   return {
     statusCode : 200,
-    body : JSON.stringify({test : getCal.data.items})
+    body : JSON.stringify({infosCal : getCal.data.items})
   }
 }

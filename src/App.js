@@ -3,6 +3,10 @@ import './App.css';
 
 import BoutonResa from './components/BoutonResa'
 
+import Agenda from './components/Agenda'
+import AreaButton from './components/AreaButton'
+import EmailForm from './components/EmailForm'
+
 
 
 
@@ -25,7 +29,7 @@ class App extends Component {
       .then(
         (data) => {
           this.setState({
-            events : data.test,
+            events : data.infosCal,
             isLoaded : true
           })
           console.log(this.state.events)
@@ -51,23 +55,6 @@ class App extends Component {
         card
       })
     })
-    //   .then(response => response.json())
-    //   .then(
-    //     (data) => {
-    //       this.setState({
-    //         events : data.test,
-    //         isLoaded : true
-    //       })
-    //       console.log(this.state.events)
-    //     },
-    //
-    //     (error) => {
-    //       this.setState({
-    //         isLoaded : true,
-    //         error
-    //       })
-    //     }
-    // )
   }
 
   handleChange = (event) => {
@@ -84,6 +71,7 @@ class App extends Component {
     this.setState({infoCard : paramChild})
   }
 
+
   render() {
     const {error, isLoaded, events,card} = this.state
     if (error) {
@@ -91,41 +79,34 @@ class App extends Component {
     }
 
     return (
+      <>
       <div className='box'>
         <div>
           <h2>Réservez un créneau avec Nicolas de Smile</h2>
         </div>
-        <div className='areaBouton'>
-        {isLoaded ? (
-          (events).map((event, i) => {
-            const didClick = () => this.cardActive(event)
-            return(
-              <BoutonResa
-                key={event.id}
-                details={event}
-                onClick={didClick}
-                isActive={card.id===event.id}>
-              </BoutonResa>
-            )
-          })
-        ) : (
+
+        <div className='areabutton'>
+          {isLoaded ?
+            (<AreaButton
+            events={this.state.events}
+            getInfos={(infos) => this.cardActive(infos)}
+            cardId={this.state.card}/>)
+          :
           <p>Loading...</p>
-        )}
+        }
         </div>
+
         <div >
-          <form
-            className='formResa'
-            onSubmit={this.handleSubmit}>
-            <input
-              type="email"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-              placeholder='votre adresse mail'
-              className='inputResa'
-              onChange={this.handleChange}/>
-            <button type='submit' className='boutonResa'>Créer rendez-vous</button>
-          </form>
+          <EmailForm
+            onSubmit={this.handleSubmit}
+            onChange={this.handleChange}>
+          </EmailForm>
         </div>
       </div>
+      <Agenda>
+      </Agenda>
+      </>
+
     );
   }
 }

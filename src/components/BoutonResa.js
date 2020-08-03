@@ -16,14 +16,14 @@ const BoutonResa = ({details, onClick, isActive}) => {
   const horaireDebut = details.start.dateTime.slice(11,16)
   const horaireFin = details.end.dateTime.slice(11,16)
 
-  const activeCard = () => {
-    onClick(dateInfo, horaireDebut, horaireFin)
+  const activeCard = (infos) => {
+    onClick(infos)
   }
 
     return(
       <div
         className ={isActive ? 'cardActive' : 'card'}
-        onClick={() => activeCard()}>
+        onClick={(infos) => activeCard(infos)}>
           <div className={isActive ? 'dateActive' : 'date'}>{dateInfo}</div>
           <div className={isActive ? 'timeActive' : 'time'}>de {horaireDebut} à {horaireFin}</div>
 
