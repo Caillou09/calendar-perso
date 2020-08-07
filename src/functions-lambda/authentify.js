@@ -10,6 +10,8 @@ const newClient = new google.auth.JWT(
   ['https://www.googleapis.com/auth/calendar']
 );
 
+console.log(process.env.REACT_APP_CALENDAR_ID)
+
 const calendar = google.calendar({
     version: 'v3',
     project: process.env.REACT_APP_PROJECT_NUMBER,
