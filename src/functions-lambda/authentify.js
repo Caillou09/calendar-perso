@@ -3,6 +3,9 @@ const {JWT} = require('google-auth-library');
 
 require('dotenv').config()
 
+console.log("prout")
+console.log(process.env.REACT_APP_CALENDAR_ID)
+
 const newClient = new google.auth.JWT(
   process.env.REACT_APP_CLIENT_EMAIL,
   null,
@@ -10,7 +13,7 @@ const newClient = new google.auth.JWT(
   ['https://www.googleapis.com/auth/calendar']
 );
 
-console.log(process.env.REACT_APP_CALENDAR_ID)
+
 
 const calendar = google.calendar({
     version: 'v3',
