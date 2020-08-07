@@ -4,16 +4,16 @@ const {JWT} = require('google-auth-library');
 require('dotenv').config()
 
 const newClient = new google.auth.JWT(
-  process.env.CLIENT_EMAIL,
+  process.env.REACT_APP_CLIENT_EMAIL,
   null,
-  process.env.PRIVATE_KEY,
+  process.env.REACT_APP_PRIVATE_KEY,
   ['https://www.googleapis.com/auth/calendar'],
   "contact@mkmstudio.fr"
 );
 
 const calendar = google.calendar({
     version: 'v3',
-    project: process.env.PROJECT_NUMBER,
+    project: process.env.REACT_APP_PROJECT_NUMBER,
     auth: newClient
   });
 
@@ -22,7 +22,7 @@ exports.handler = async (event, context) => {
 
   try {
     const upCal = await calendar.events.update({
-        calendarId: process.env.CALENDAR_ID,
+        calendarId: process.env.REACT_APP_CALENDAR_ID,
         eventId : card.id,
         resource : {
           end : card.end,
