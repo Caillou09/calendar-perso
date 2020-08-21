@@ -12,7 +12,7 @@ registerLocale("fr", fr)
 
 
 
-const Agenda = (props) => {
+const Time = (props) => {
 
   const [startDate, setStartDate] = useState(new Date());
 
@@ -26,12 +26,17 @@ const Agenda = (props) => {
         onChange={date => setStartDate(date)}
         inline
         minDate={new Date()}
-        showDisabledMonthNavigation
+        showTimeSelect
+        showTimeSelect
+        showTimeSelectOnly
+        timeIntervals={30}
+        timeCaption="Time"
+        dateFormat="h:mm aa"
       />
     </div>
   )
 }
 
-export default styled(Agenda)`
-  text-align: center;
+export default styled(Time)`
+margin : 1em;
 `
