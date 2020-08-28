@@ -111,7 +111,7 @@ const Time = ({events, className, getDate, getData}) => {
         locale='fr'
         selected={timeDate}
         onChange={(date) => setTimeDate(date)}
-        minTime={setHours(setMinutes(new Date(), 0), 8)}
+        minTime={setHours(setMinutes(new Date(), 30), 8)}
         maxTime={setHours(setMinutes(new Date(), 30), 18)}
         inline
         excludeTimes={excludeTime(arrayEvents)}

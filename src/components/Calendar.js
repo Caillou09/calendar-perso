@@ -35,5 +35,5 @@ export default styled(Calendar)`
   display : flex;
   flex-direction : row;
   justify-content : center;
-
+  align-items : center;
 `
