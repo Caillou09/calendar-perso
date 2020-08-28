@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import BoutonResa from './BoutonResa'
 
 const AreaButton = ({events, cardId, getInfos }) => {

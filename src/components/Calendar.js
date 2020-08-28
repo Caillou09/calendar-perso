@@ -1,15 +1,32 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {useState} from 'react'
 import Agenda from "./Agenda"
 import Time from "./Time"
 
 import styled from 'styled-components'
 
-const Calendar = ({className}) => {
+const Calendar = ({className, events}) => {
+
+  const [datePick, setDatePick] = useState(new Date());
+  const [dataPick, setDataPick] = useState("")
+
+  const getDatePick = (date) => {
+    setDatePick(date)
+  }
+
+  const getDataPick = (data) => {
+    setDataPick(data)
+  }
+
   return (
     <div className={className}>
-      <Agenda/>
-      <Time/>
+      <Agenda
+        getDate = {(date) => getDatePick(date)}
+        getData = {(data) => getDataPick(data)}
+        events={events}/>
+      <Time
+        getDate = {datePick}
+        getData = {dataPick}
+        events={events}/>
     </div>
   )
 }

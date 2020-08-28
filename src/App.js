@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 
-import BoutonResa from './components/BoutonResa'
-
-import Agenda from './components/Agenda'
-import AreaButton from './components/AreaButton'
 import EmailForm from './components/EmailForm'
-
-
+import Calendar from './components/Calendar'
+import AreaButton from './components/AreaButton'
 
 
 class App extends Component {
@@ -73,7 +69,7 @@ class App extends Component {
 
 
   render() {
-    const {error, isLoaded, events,card} = this.state
+    const {error, isLoaded, events, card} = this.state
     if (error) {
       return <div>Error : {error.message}</div>
     }
@@ -87,12 +83,26 @@ class App extends Component {
           <h2>Réservez un créneau avec Nicolas de Smile</h2>
         </div>
 
+
+        {/* Ancien code avec la liste des carrés des événements
         <div className='areabutton'>
           {isLoaded ?
             (<AreaButton
             events={this.state.events}
             getInfos={(infos) => this.cardActive(infos)}
             cardId={this.state.card}/>)
+          :
+          <p>Loading...</p>
+        }
+        </div>
+        */}
+
+
+        <div className='areabutton'>
+          {isLoaded ?
+          (<Calendar
+            events={events}>
+          </Calendar>)
           :
           <p>Loading...</p>
         }
@@ -105,8 +115,6 @@ class App extends Component {
           </EmailForm>
         </div>
       </div>
-      <Agenda>
-      </Agenda>
       </>
 
     );

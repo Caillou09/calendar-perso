@@ -1,5 +1,4 @@
-import React, {useEffet, useState} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import '../App.css';
 
 const EmailForm = ({onSubmit, onChange}) => {
