@@ -89,7 +89,7 @@ const Time = ({events, className, getDate, getData}) => {
 
     if (iterationIndispo > 1) {
       for (let i = iterationIndispo; i>1; i--) {
-        let datePush = arrayDates[0].getTime() + 1800*1000*(i-1)
+        let datePush = arrayIterations[0].getTime() + 1800*1000*(i-1)
         arrayDates.splice(1, 0, datePush)
       }
     }
@@ -114,7 +114,12 @@ const Time = ({events, className, getDate, getData}) => {
         minTime={setHours(setMinutes(new Date(), 30), 8)}
         maxTime={setHours(setMinutes(new Date(), 30), 18)}
         inline
-        excludeTimes={excludeTime(arrayEvents)}
+        excludeTimes={[
+          ...excludeTime(arrayEvents),
+          setHours(setMinutes(new Date(), 30), 12),
+          setHours(setMinutes(new Date(), 0), 13),
+          setHours(setMinutes(new Date(), 30), 13)
+        ]}
         showTimeSelect
         showTimeSelectOnly
         timeIntervals={30}

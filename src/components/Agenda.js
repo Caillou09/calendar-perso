@@ -60,6 +60,7 @@ const Agenda = ({events, className, getDate, getData}) => {
         inline
         minDate={new Date()}
         showDisabledMonthNavigation
+        disabledKeyboardNavigation
       />
     </div>
   )

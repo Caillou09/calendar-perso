@@ -24,7 +24,7 @@ const calendar = google.calendar({
 exports.handler = async(event, context) => {
   const date = event.body
   const dateMin = new Date(date).setHours(0,0,0)
-  const dateMax = new Date(date).setHours(11,59,59)
+  const dateMax = new Date(date).setHours(23,59,59)
 
   const getCal = await calendar.events.list({
       calendarId: process.env.REACT_APP_CALENDAR_ID,
