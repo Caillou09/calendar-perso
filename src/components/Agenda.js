@@ -12,7 +12,7 @@ registerLocale("fr", fr)
 
 
 
-const Agenda = ({events, className, getDate, getData}) => {
+const Agenda = ({className, getDate, getData}) => {
 
   const isWeekday = date => {
   const day = getDay(date);

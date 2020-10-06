@@ -14,7 +14,7 @@ registerLocale("fr", fr)
 
 
 
-const Time = ({events, className, getDate, getData}) => {
+const Time = ({className, getDate, getData}) => {
 
   const [timeDate, setTimeDate] = useState(getDate)
   const [eventsPick, setEventsPick] = useState(getData)

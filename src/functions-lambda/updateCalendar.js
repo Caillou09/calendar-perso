@@ -8,7 +8,7 @@ const newClient = new google.auth.JWT(
   null,
   process.env.REACT_APP_PRIVATE_KEY,
   ['https://www.googleapis.com/auth/calendar'],
-  process.env.REACT_APP_CALENDAR_ID
+  "contact@mkmstudio.fr"
 );
 
 const calendar = google.calendar({

@@ -4,10 +4,11 @@ import Time from "./Time"
 
 import styled from 'styled-components'
 
-const Calendar = ({className, events}) => {
+const Calendar = ({className, events, sendData}) => {
 
   const [datePick, setDatePick] = useState(new Date());
   const [dataPick, setDataPick] = useState("")
+
 
   const getDatePick = (date) => {
     setDatePick(date)
@@ -21,12 +22,10 @@ const Calendar = ({className, events}) => {
     <div className={className}>
       <Agenda
         getDate = {(date) => getDatePick(date)}
-        getData = {(data) => getDataPick(data)}
-        events={events}/>
+        getData = {(data) => getDataPick(data)}/>
       <Time
         getDate = {datePick}
-        getData = {dataPick}
-        events={events}/>
+        getData = {dataPick}/>
     </div>
   )
 }

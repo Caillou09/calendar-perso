@@ -108,7 +108,7 @@ class App extends Component {
         }
         </div>
 
-        <div >
+        <div style={{paddingTop : "50px"}}>
           <EmailForm
             onSubmit={this.handleSubmit}
             onChange={this.handleChange}>
