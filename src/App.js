@@ -15,7 +15,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: null,
       email:null,
       isLoaded : false,
     }
@@ -27,10 +26,9 @@ class App extends Component {
       .then(
         (data) => {
           this.setState({
-            events : data.infosCal,
             isLoaded : true
           })
-          console.log(this.state.events)
+          console.log(this.state.isLoaded)
         },
 
         (error) => {
@@ -67,7 +65,7 @@ class App extends Component {
 
 
   render() {
-    const {error, isLoaded, events} = this.state
+    const {error, isLoaded} = this.state
     if (error) {
       return <div>Error : {error.message}</div>
     }
@@ -83,9 +81,7 @@ class App extends Component {
 
           <div className='areabutton'>
             {isLoaded ?
-            (<Calendar
-              events={events}>
-            </Calendar>)
+            (<Calendar></Calendar>)
             :
             <p>Loading...</p>
           }

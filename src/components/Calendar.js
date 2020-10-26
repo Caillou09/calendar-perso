@@ -4,7 +4,7 @@ import Time from "./Time"
 
 import styled from 'styled-components'
 
-const Calendar = ({className, events, sendData}) => {
+const Calendar = ({className, sendData}) => {
 
   const [datePick, setDatePick] = useState(new Date());
   const [dataPick, setDataPick] = useState("")

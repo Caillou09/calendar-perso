@@ -14,6 +14,7 @@ registerLocale("fr", fr)
 
 const Agenda = ({className, getDate, getData}) => {
 
+  //Fonction pour rendre notclickable les samedi et dimanche
   const isWeekday = date => {
   const day = getDay(date);
   return day !== 0 && day !== 6;

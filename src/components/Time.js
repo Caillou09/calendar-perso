@@ -16,8 +16,8 @@ registerLocale("fr", fr)
 
 const Time = ({className, getDate, getData}) => {
 
-  const [timeDate, setTimeDate] = useState(getDate)
-  const [eventsPick, setEventsPick] = useState(getData)
+  const [timeDate, setTimeDate] = useState("")
+  const [eventsPick, setEventsPick] = useState("")
 
 
   useEffect( () => {
@@ -42,67 +42,67 @@ const Time = ({className, getDate, getData}) => {
     const arrayDatesFormated = [];
 
 
-  //Fonction pour transformer la date au bon format pour la props ExcludeTimes du react DatePicker
-  const formatDate = (date) => {
-    let minutes = (new Date(date)).getMinutes()
-    let hours = (new Date(date)).getHours()
-    let dateFormated = setHours(setMinutes(new Date(date),minutes), hours);
-    return dateFormated
-  }
-  arrayEvents.forEach( (arrayEvent) => {
-    let startDate = arrayEvent[0]
-    let endDate = arrayEvent[1]
-    const arrayIterations = [];
+    //Fonction pour transformer la date au bon format pour la props ExcludeTimes du react DatePicker
+    const formatDate = (date) => {
+      let minutes = (new Date(date)).getMinutes()
+      let hours = (new Date(date)).getHours()
+      let dateFormated = setHours(setMinutes(new Date(date),minutes), hours);
+      return dateFormated
+    }
+    arrayEvents.forEach( (arrayEvent) => {
+      let startDate = arrayEvent[0]
+      let endDate = arrayEvent[1]
+      const arrayIterations = [];
 
 
-    //si jamais le temps de début est entre la pile et la demie
-    if (startDate.getMinutes()>0 && startDate.getMinutes()<30) {
-    //On rapport le temps à la pile pour fixer cet horaire comme indisponible
-      let newStartDate = startDate.setMinutes(0,0)
-      arrayDates.push(newStartDate)
-      arrayIterations.push(newStartDate)
-
-    //si jamais le temps de début est supérieur à la demie
-    } else if (startDate.getMinutes()>30) {
-        let newStartDate = startDate.setMinutes(30,0)
+      //si jamais le temps de début est entre la pile et la demie
+      if (startDate.getMinutes()>0 && startDate.getMinutes()<30) {
+      //On rapport le temps à la pile pour fixer cet horaire comme indisponible
+        let newStartDate = startDate.setMinutes(0,0)
         arrayDates.push(newStartDate)
         arrayIterations.push(newStartDate)
-    } else {
-      arrayDates.push(startDate)
-      arrayIterations.push(startDate)
-    }
-    if (endDate.getMinutes()>0 && endDate.getMinutes()<30) {
-      let newEndDate = endDate.setMinutes(30,0)
-      arrayDates.push(newEndDate)
-      arrayIterations.push(newEndDate)
-    } else if (endDate.getMinutes()>30) {
-        let newEndDate = endDate.setHours((endDate.getHours()+1),0)
+
+      //si jamais le temps de début est supérieur à la demie
+      } else if (startDate.getMinutes()>30) {
+          let newStartDate = startDate.setMinutes(30,0)
+          arrayDates.push(newStartDate)
+          arrayIterations.push(newStartDate)
+      } else {
+        arrayDates.push(startDate)
+        arrayIterations.push(startDate)
+      }
+      if (endDate.getMinutes()>0 && endDate.getMinutes()<30) {
+        let newEndDate = endDate.setMinutes(30,0)
         arrayDates.push(newEndDate)
         arrayIterations.push(newEndDate)
-    } else {
-      arrayDates.push(endDate)
-      arrayIterations.push(endDate)
-    }
-
-    //On calcule le nombre de créneau de 30min à rendre indisponible
-    let iterationIndispo = ((arrayIterations[1].getTime()/1000 - arrayIterations[0].getTime()/1000)/1800);
-
-    if (iterationIndispo > 1) {
-      for (let i = iterationIndispo; i>1; i--) {
-        let datePush = arrayIterations[0].getTime() + 1800*1000*(i-1)
-        arrayDates.splice(1, 0, datePush)
+      } else if (endDate.getMinutes()>30) {
+          let newEndDate = endDate.setHours((endDate.getHours()+1),0)
+          arrayDates.push(newEndDate)
+          arrayIterations.push(newEndDate)
+      } else {
+        arrayDates.push(endDate)
+        arrayIterations.push(endDate)
       }
-    }
-  })
-  //on trie les dates de l'array de manière croissante
-  arrayDates.sort(function(a,b){return a - b})
 
-  arrayDates.forEach( (date) => {
-    arrayDatesFormated.push(formatDate(date));
-  })
+      //On calcule le nombre de créneau de 30min à rendre indisponible
+      let iterationIndispo = ((arrayIterations[1].getTime()/1000 - arrayIterations[0].getTime()/1000)/1800);
 
-  return arrayDatesFormated
-}
+      if (iterationIndispo > 1) {
+        for (let i = iterationIndispo; i>1; i--) {
+          let datePush = arrayIterations[0].getTime() + 1800*1000*(i-1)
+          arrayDates.splice(1, 0, datePush)
+        }
+      }
+    })
+    //on trie les dates de l'array de manière croissante
+    arrayDates.sort(function(a,b){return a - b})
+
+    arrayDates.forEach( (date) => {
+      arrayDatesFormated.push(formatDate(date));
+    })
+
+    return arrayDatesFormated
+  }
 
   return (
     <div className={className}>
