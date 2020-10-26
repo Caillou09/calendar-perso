@@ -4,18 +4,20 @@ import './App.css';
 import EmailForm from './components/EmailForm'
 import Calendar from './components/Calendar'
 import AreaButton from './components/AreaButton'
+import ReduxTest from './components/ReduxTest'
+
+import { Provider } from 'react-redux'
+import store from './redux/store'
+
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookButton:'Je choisis ce créneau',
       events: null,
       email:null,
       isLoaded : false,
-      card : '',
-      infoCard : ''
     }
   }
 
@@ -42,13 +44,12 @@ class App extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    const {email,card} = this.state
+    const {email} = this.state
 
     fetch("/.netlify/functions/updateCalendar", {
       method: 'POST',
       body: JSON.stringify({
-        email,
-        card
+        email
       })
     })
   }
@@ -58,9 +59,6 @@ class App extends Component {
     this.setState({ email })
   }
 
-  cardActive = (card) => {
-    this.setState({card})
-  }
 
 
   infoChild = (paramChild) => {
@@ -69,7 +67,7 @@ class App extends Component {
 
 
   render() {
-    const {error, isLoaded, events, card} = this.state
+    const {error, isLoaded, events} = this.state
     if (error) {
       return <div>Error : {error.message}</div>
     }
@@ -77,45 +75,34 @@ class App extends Component {
 
 
     return (
-      <>
-      <div className='box'>
-        <div>
-          <h2>Réservez un créneau avec Nicolas de Smile</h2>
+      <Provider store={store}>
+        <div className='box'>
+          <div>
+            <h2>Réservez un créneau avec Nicolas de Smile</h2>
+          </div>
+
+          <div className='areabutton'>
+            {isLoaded ?
+            (<Calendar
+              events={events}>
+            </Calendar>)
+            :
+            <p>Loading...</p>
+          }
+          </div>
+
+          <div style={{paddingTop : "50px"}}>
+            <EmailForm
+              onSubmit={this.handleSubmit}
+              onChange={this.handleChange}>
+            </EmailForm>
+          </div>
+          <div>
+            <ReduxTest>
+            </ReduxTest>
+          </div>
         </div>
-
-
-        {/* Ancien code avec la liste des carrés des événements
-        <div className='areabutton'>
-          {isLoaded ?
-            (<AreaButton
-            events={this.state.events}
-            getInfos={(infos) => this.cardActive(infos)}
-            cardId={this.state.card}/>)
-          :
-          <p>Loading...</p>
-        }
-        </div>
-        */}
-
-
-        <div className='areabutton'>
-          {isLoaded ?
-          (<Calendar
-            events={events}>
-          </Calendar>)
-          :
-          <p>Loading...</p>
-        }
-        </div>
-
-        <div style={{paddingTop : "50px"}}>
-          <EmailForm
-            onSubmit={this.handleSubmit}
-            onChange={this.handleChange}>
-          </EmailForm>
-        </div>
-      </div>
-      </>
+      </Provider>
 
     );
   }
