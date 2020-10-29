@@ -20,25 +20,7 @@ class App extends Component {
     }
   }
 
- componentDidMount() {
-    fetch("/.netlify/functions/authentify")
-      .then(response => response.json())
-      .then(
-        (data) => {
-          this.setState({
-            isLoaded : true
-          })
-          console.log(this.state.isLoaded)
-        },
 
-        (error) => {
-          this.setState({
-            isLoaded : true,
-            error
-          })
-        }
-    )
-  }
 
   handleSubmit = (event) => {
     event.preventDefault()
@@ -58,12 +40,6 @@ class App extends Component {
   }
 
 
-
-  infoChild = (paramChild) => {
-    this.setState({infoCard : paramChild})
-  }
-
-
   render() {
     const {error, isLoaded} = this.state
     if (error) {
@@ -80,11 +56,7 @@ class App extends Component {
           </div>
 
           <div className='areabutton'>
-            {isLoaded ?
-            (<Calendar></Calendar>)
-            :
-            <p>Loading...</p>
-          }
+            <Calendar></Calendar>
           </div>
 
           <div style={{paddingTop : "50px"}}>
@@ -94,8 +66,9 @@ class App extends Component {
             </EmailForm>
           </div>
           <div>
-            <ReduxTest>
+          {/*  <ReduxTest>
             </ReduxTest>
+            */}
           </div>
         </div>
       </Provider>

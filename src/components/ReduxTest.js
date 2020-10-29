@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react'
 
 import { connect } from 'react-redux'
-import { fetchEvents } from '../redux'
+import { fetchEventsOfDay } from '../redux'
 
 
 
 
-const ReduxTest = ({ eventData, fetchEvents }) => {
+const ReduxTest = ({ eventData, fetchEventsOfDay }) => {
 
   useEffect( () => {
-    fetchEvents()
+    fetchEventsOfDay()
   }, [])
 
 
@@ -28,7 +28,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEvents: () => dispatch(fetchEvents())
+    fetchEventsOfDay: () => dispatch(fetchEventsOfDay())
   }
 }
 

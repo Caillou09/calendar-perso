@@ -1,4 +1,7 @@
 import React, {useState, useEffect} from 'react'
+
+import { connect } from 'react-redux'
+
 import DatePicker from "react-datepicker"
 import {registerLocale} from "react-datepicker"
 
@@ -14,19 +17,21 @@ registerLocale("fr", fr)
 
 
 
-const Time = ({className, getDate, getData}) => {
+const Time = ({className, getDate, getData, pickedStartDate,eventsOfDay}) => {
 
   const [timeDate, setTimeDate] = useState("")
-  const [eventsPick, setEventsPick] = useState("")
+  const [eventsPick, setEventsPick] = useState([])
 
 
   useEffect( () => {
-    setTimeDate(getDate)
-  }, [getDate])
+    console.log(pickedStartDate)
+    setTimeDate(pickedStartDate)
+  }, [pickedStartDate])
 
   useEffect( () => {
-    setEventsPick(getData)
-  }, [getData])
+    console.log(eventsOfDay)
+    setEventsPick(eventsOfDay)
+  }, [eventsOfDay])
 
 //On va chercher les start et end de chaque event dans l'agenda pour les mettre dans un tableau
   const arrayEvents = []
@@ -130,6 +135,13 @@ const Time = ({className, getDate, getData}) => {
   )
 }
 
-export default styled(Time)`
+const mapStateToProps = state => {
+  return {
+    pickedStartDate : state.getStartDate.startDate,
+    eventsOfDay : state.eventsOfDay.events
+  }
+}
+
+export default connect(mapStateToProps)(styled(Time)`
 margin : 1em;
-`
+`)

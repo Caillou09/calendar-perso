@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
-import appStateReducer from './appState/appStateReducer'
+import eventsOfDayReducer from './eventsOfDay/eventsOfDayReducer'
+import getStartDateReducer from './startDate/startDateReducer'
 
 const rootReducer = combineReducers({
-  appState : appStateReducer
+  eventsOfDay : eventsOfDayReducer,
+  getStartDate : getStartDateReducer
 })
 
 export default rootReducer

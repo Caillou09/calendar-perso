@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react'
+
+import { connect } from 'react-redux'
+import { getStartDate, fetchEventsOfDay } from '../redux'
+
 import DatePicker from "react-datepicker"
 import {registerLocale} from "react-datepicker"
+
+
 
 import styled from 'styled-components';
 import getDay from 'date-fns/getDay';
@@ -12,7 +18,7 @@ registerLocale("fr", fr)
 
 
 
-const Agenda = ({className, getDate, getData}) => {
+const Agenda = ({className, getDate, getData, getStartDate, pickedStartDate, fetchEventsOfDay, eventsOfDay}) => {
 
   //Fonction pour rendre notclickable les samedi et dimanche
   const isWeekday = date => {
@@ -22,29 +28,20 @@ const Agenda = ({className, getDate, getData}) => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [data, setData] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const sendDate = (date) => {
     //On fait remonter les states pour les utiliser dans sibling component Time.js
     getDate(date)
     //On set l'heure de la date à 00:00 pour avoir le jour entier
-    setStartDate(new Date(date.setHours(0,0,0)))
+    setStartDate(new Date(date.setUTCHours(0,0,0,0)))
+
   }
 
 //Récupération des événements de la date du jour avec netlify functions
   useEffect(() => {
-    fetch("/.netlify/functions/getEventsOfDay", {
-      method: 'POST',
-      body : startDate
-    })
-    .then(response => response.json())
-    .then(
-      (data) => {
-        setData(data.infosCalOfDay)
-        getData(data.infosCalOfDay)
-      })
-
-
+    //On fait remonter le changement de state dans Redux
+    getStartDate(startDate)
+    fetchEventsOfDay(startDate)
 
   }, [startDate]);
 
@@ -67,6 +64,21 @@ const Agenda = ({className, getDate, getData}) => {
   )
 }
 
-export default styled(Agenda)`
+const mapStateToProps = state => {
+  return {
+    pickedStartDate : state.getStartDate.startDate,
+    eventsOfDay : state.eventsOfDay.events
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getStartDate : startDate => dispatch(getStartDate(startDate)),
+    fetchEventsOfDay : startDate => dispatch(fetchEventsOfDay(startDate))
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(styled(Agenda)`
   text-align: center;
-`
+`)
