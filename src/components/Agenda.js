@@ -33,7 +33,7 @@ const Agenda = ({className, getDate, getData, getStartDate, pickedStartDate, fet
     //On fait remonter les states pour les utiliser dans sibling component Time.js
     getDate(date)
     //On set l'heure de la date à 00:00 pour avoir le jour entier
-    setStartDate(new Date(date.setUTCHours(0,0,0,0)))
+    setStartDate(new Date(date.setHours(0,0,0,0)))
 
   }
 

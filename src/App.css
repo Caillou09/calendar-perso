@@ -25,27 +25,6 @@
 	margin : 20px;
 }
 
-.card {
-	margin : 20px;
-	border-radius : 4px;
-	display: flex;
-	flex-direction: column;
-	cursor: pointer;
-	justify-content: center
-}
-
-.cardActive {
-	margin : 20px;
-	border-radius : 4px;
-	-webkit-box-shadow: -1px 15px 30px -12px black;
-  -moz-box-shadow: -1px 15px 30px -12px black;
-  box-shadow: -1px 15px 30px -12px black;
-	display: flex;
-	flex-direction: column;
-	cursor: pointer;
-	justify-content: center
-}
-
 
 .inputResa {
   box-sizing: border-box;

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import { connect } from 'react-redux'
+import { getTimeDate } from '../redux'
 
 import DatePicker from "react-datepicker"
 import {registerLocale} from "react-datepicker"
@@ -8,6 +9,9 @@ import {registerLocale} from "react-datepicker"
 import styled from 'styled-components';
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
+import eachHourOfInterval from 'date-fns/eachHourOfInterval'
+
 import "react-datepicker/dist/react-datepicker.css";
 import './Agenda.css';
 
@@ -17,24 +21,45 @@ registerLocale("fr", fr)
 
 
 
-const Time = ({className, getDate, getData, pickedStartDate,eventsOfDay}) => {
+const Time = ({className, getDate, getData, pickedStartDate, eventsOfDay, getTimeDate}) => {
 
   const [timeDate, setTimeDate] = useState("")
   const [eventsPick, setEventsPick] = useState([])
-
+  const [timePast, setTimePast] = useState([])
 
   useEffect( () => {
-    console.log(pickedStartDate)
     setTimeDate(pickedStartDate)
   }, [pickedStartDate])
 
   useEffect( () => {
-    console.log(eventsOfDay)
     setEventsPick(eventsOfDay)
   }, [eventsOfDay])
 
+  useEffect( () => {
+    getTimeDate(timeDate)
+    //On calcule les temps passés à exclure si la personne choisit un créneau du jour meme
+    if ((new Date(timeDate)).getDate() === (new Date()).getDate() && (new Date(timeDate)).getMonth() === (new Date()).getMonth()) {
+      var dateToday = roundToNearestMinutes(new Date(), { nearestTo: 30 })
+      var tabTimePast = eachHourOfInterval({
+        start: setHours(setMinutes(new Date(), 30), 8),
+        end: dateToday
+      })
+      setTimePast(tabTimePast)
+    } else {
+      setTimePast([])
+    }
+
+  }, [timeDate])
+
+
+  useEffect( () => {
+
+  }, [timePast])
+
+
 //On va chercher les start et end de chaque event dans l'agenda pour les mettre dans un tableau
   const arrayEvents = []
+  const tabTimePast = []
   if (eventsPick.length !== 0) {
         eventsPick.map( (event) => {
           arrayEvents.push([new Date(event.start.dateTime), new Date(event.end.dateTime)])
@@ -99,6 +124,18 @@ const Time = ({className, getDate, getData, pickedStartDate,eventsOfDay}) => {
         }
       }
     })
+
+
+
+    //On inclus les temps à exclure au cas où la date de choix de créneau corresponde à la date du jour
+    if (timePast.length > 0) {
+      timePast.forEach( (date) => {
+        arrayDates.push(date)
+        arrayDates.push(setMinutes(new Date(date), 30))
+      })
+    }
+
+
     //on trie les dates de l'array de manière croissante
     arrayDates.sort(function(a,b){return a - b})
 
@@ -142,6 +179,12 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(styled(Time)`
+const mapDispatchToProps = dispatch => {
+  return {
+    getTimeDate : timeDate => dispatch(getTimeDate(timeDate))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(styled(Time)`
 margin : 1em;
 `)

@@ -3,7 +3,7 @@
 }
 
 .react-datepicker {
-  font-size: 1em;
+  font-size: 1.2em;
 }
 .react-datepicker__header {
   padding-top: 0.8em;
@@ -58,3 +58,13 @@
 .react-datepicker__day--keyboard-selected {
 
 }
+
+.react-datepicker__time-container { width: 5em !important}
+.react-datepicker-time__header { font-size: 1em !important }
+.react-datepicker-time__header--time { padding-left: 0px !important; padding-right: 0px !important }
+.react-datepicker__time-box {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  width:100% !important
+}
+.react-datepicker__time-list { padding: 0 !important; }
