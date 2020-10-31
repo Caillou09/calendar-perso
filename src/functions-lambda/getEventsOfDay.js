@@ -26,7 +26,7 @@ exports.handler = async(event, context) => {
   const dateMin = new Date(date).setHours(0,0,0)
   const dateMax = new Date(date).setHours(23,59,59)
 
-  const getCal = await calendar.events.list({
+  const getEvents = await calendar.events.list({
       calendarId: process.env.REACT_APP_CALENDAR_ID,
       timeMin: (new Date(dateMin)).toISOString(),
       timeMax : (new Date(dateMax)).toISOString(),
@@ -36,6 +36,6 @@ exports.handler = async(event, context) => {
 
   return {
     statusCode : 200,
-    body : JSON.stringify({infosCalOfDay : getCal.data.items})
+    body : JSON.stringify({infosCalOfDay : getEvents.data.items})
   }
 }
