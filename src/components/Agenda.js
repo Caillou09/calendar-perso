@@ -40,7 +40,7 @@ const Agenda = ({className, getDate, getData, getStartDate, pickedStartDate, fet
 //Récupération des événements de la date du jour avec netlify functions
   useEffect(() => {
     //On fait remonter le changement de state dans Redux
-    getStartDate(startDate)
+    getStartDate(Date.parse(startDate))
     fetchEventsOfDay(startDate)
 
   }, [startDate]);

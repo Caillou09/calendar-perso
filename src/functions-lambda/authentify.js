@@ -4,11 +4,12 @@ const {JWT} = require('google-auth-library');
 require('dotenv').config()
 
 
+const privateObj = JSON.parse(process.env.REACT_APP_PRIVATE_KEY)
 
 const newClient = new google.auth.JWT(
   process.env.REACT_APP_CLIENT_EMAIL,
   null,
-  process.env.REACT_APP_PRIVATE_KEY,
+  privateObj.key,
   ['https://www.googleapis.com/auth/calendar']
 );
 
