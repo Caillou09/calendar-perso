@@ -1,6 +1,7 @@
 const { google } = require("googleapis")
 const {JWT} = require('google-auth-library');
 
+
 require('dotenv').config()
 
 console.log("Moïra")
@@ -25,11 +26,10 @@ const calendar = google.calendar({
 
 
 exports.handler = async(event, context) => {
-  const date = event.body
+  const {date, dateMin, dateMax} = JSON.parse(event.body)
   console.log(date)
-  const dateMin = new Date(date).setHours(0,0,0)
-  console.log(dateMin)
-  const dateMax = new Date(date).setHours(23,59,59)
+  console.log(new Date(dateMin))
+  console.log((new Date(dateMax)).toISOString())
 
   const getEvents = await calendar.events.list({
       calendarId: process.env.REACT_APP_CALENDAR_ID,

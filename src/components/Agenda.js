@@ -10,6 +10,7 @@ import {registerLocale} from "react-datepicker"
 
 import styled from 'styled-components';
 import getDay from 'date-fns/getDay';
+import set from 'date-fns/set'
 import "react-datepicker/dist/react-datepicker.css";
 import './Agenda.css';
 
@@ -18,7 +19,7 @@ registerLocale("fr", fr)
 
 
 
-const Agenda = ({className, getDate, getData, getStartDate, pickedStartDate, fetchEventsOfDay, eventsOfDay}) => {
+const Agenda = ({className, getData, getStartDate, pickedStartDate, fetchEventsOfDay, eventsOfDay}) => {
 
   //Fonction pour rendre notclickable les samedi et dimanche
   const isWeekday = date => {
@@ -30,17 +31,19 @@ const Agenda = ({className, getDate, getData, getStartDate, pickedStartDate, fet
   const [data, setData] = useState("");
 
   const sendDate = (date) => {
-    //On fait remonter les states pour les utiliser dans sibling component Time.js
-    getDate(date)
+
+    const dateToParse = set(new Date(date), {hours : 0, minutes : 0, seconds : 0})
+
     //On set l'heure de la date à 00:00 pour avoir le jour entier
-    setStartDate(new Date(date.setHours(0,0,0,0)))
+    setStartDate(Date.parse(dateToParse))
 
   }
 
 //Récupération des événements de la date du jour avec netlify functions
   useEffect(() => {
+    console.log(startDate)
     //On fait remonter le changement de state dans Redux
-    getStartDate(Date.parse(startDate))
+    getStartDate(startDate)
     fetchEventsOfDay(startDate)
 
   }, [startDate]);
