@@ -18,7 +18,7 @@ export const fetchEventsOfDay = (startDate) => {
     fetch("/.netlify/functions/getEventsOfDay", {
       method: 'POST',
       body : JSON.stringify({
-        date, dateMin, dateMax
+        dateMin, dateMax
       })
     })
     .then(response => response.json())

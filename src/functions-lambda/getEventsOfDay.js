@@ -26,8 +26,7 @@ const calendar = google.calendar({
 
 
 exports.handler = async(event, context) => {
-  const {date, dateMin, dateMax} = JSON.parse(event.body)
-  console.log(date)
+  const {dateMin, dateMax} = JSON.parse(event.body)
   console.log(new Date(dateMin))
   console.log((new Date(dateMax)).toISOString())
 
