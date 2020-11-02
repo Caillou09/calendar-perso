@@ -11,7 +11,6 @@ export const loadEventsOfDay = (events) => {
 export const fetchEventsOfDay = (startDate) => {
   return (dispatch) => {
 
-    const date = startDate
     const dateMin = (new Date(startDate)).setHours(0,0,0,0)
     const dateMax = (new Date(startDate)).setHours(23,59,59,0)
 
