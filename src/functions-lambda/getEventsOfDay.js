@@ -6,12 +6,12 @@ require('dotenv').config()
 
 console.log("Moïra")
 
-const privateObj = JSON.parse(process.env.REACT_APP_PRIVATE_KEY)
+
 
 const newClient = new google.auth.JWT(
   process.env.REACT_APP_CLIENT_EMAIL,
   null,
-  privateObj,
+  JSON.parse(process.env.REACT_APP_PRIVATE_KEY),
   ['https://www.googleapis.com/auth/calendar'],
   process.env.REACT_APP_CALENDAR_ID
 );
@@ -25,14 +25,15 @@ const calendar = google.calendar({
 
 
 exports.handler = async(event, context) => {
-  const {dateMin, dateMax} = JSON.parse(event.body)
-  console.log(new Date(dateMin))
-  console.log((new Date(dateMax)).toISOString())
+  const {dateMinFormated, dateMaxFormated} = JSON.parse(event.body)
+  console.log(dateMinFormated)
+  console.log(new Date(dateMinFormated))
+  console.log(new Date(dateMaxFormated))
 
   const getEvents = await calendar.events.list({
       calendarId: process.env.REACT_APP_CALENDAR_ID,
-      timeMin: (new Date(dateMin)).toISOString(),
-      timeMax : (new Date(dateMax)).toISOString(),
+      timeMin: new Date(dateMinFormated),
+      timeMax : new Date(dateMaxFormated),
       singleEvents: true,
       orderBy: 'startTime',
     });
