@@ -32,8 +32,8 @@ exports.handler = async(event, context) => {
 
   const getEvents = await calendar.events.list({
       calendarId: process.env.REACT_APP_CALENDAR_ID,
-      timeMin: new Date(dateMinFormated),
-      timeMax : new Date(dateMaxFormated),
+      timeMin: dateMinFormated,
+      timeMax : dateMaxFormated,
       singleEvents: true,
       orderBy: 'startTime',
     });

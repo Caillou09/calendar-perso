@@ -17,7 +17,7 @@ export const fetchEventsOfDay = (startDate) => {
     const dateMinFormated = (new Date(dateMin)).toISOString()
     const dateMaxFormated = (new Date(dateMax)).toISOString()
 
-    console.log(JSON.stringify({dateMinFormated, dateMax}), new Date(startDate).toISOString())
+    console.log(JSON.stringify({dateMinFormated, dateMaxFormated}), new Date(startDate).toISOString())
 
     fetch("/.netlify/functions/getEventsOfDay", {
       method: 'POST',
