@@ -6,6 +6,8 @@ import Calendar from './components/Calendar'
 import AreaButton from './components/AreaButton'
 import Presentation from './components/Presentation'
 import SectionPrincipale from './themes/SectionPrincipale'
+import ContainerPrincipal from './themes/ContainerPrincipal'
+import Header from './components/Header'
 
 import { Provider } from 'react-redux'
 import store from './redux/store'
@@ -17,9 +19,10 @@ const App = () => {
 
   return (
     <Provider store={store}>
-    <SectionPrincipale>
+    <ContainerPrincipal>
+      <SectionPrincipale>
+        <Header></Header>
         <Presentation></Presentation>
-
         <div className='box'>
           <div className='areabutton'>
             <Calendar></Calendar>
@@ -29,7 +32,8 @@ const App = () => {
             </EmailForm>
           </div>
         </div>
-    </SectionPrincipale>
+      </SectionPrincipale>
+    </ContainerPrincipal>
     </Provider>
 
   );

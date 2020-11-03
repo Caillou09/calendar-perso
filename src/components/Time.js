@@ -40,11 +40,16 @@ const Time = ({className, getDate, getData, pickedStartDate, eventsOfDay, getTim
     //On calcule les temps passés à exclure si la personne choisit un créneau du jour meme
     if ((new Date(timeDate)).getDate() === (new Date()).getDate() && (new Date(timeDate)).getMonth() === (new Date()).getMonth()) {
       var dateToday = roundToNearestMinutes(new Date(), { nearestTo: 30 })
-      var tabTimePast = eachHourOfInterval({
-        start: setHours(setMinutes(new Date(), 30), 8),
-        end: dateToday
-      })
-      setTimePast(tabTimePast)
+      var start = setHours(setMinutes(new Date(timeDate), 30), 8)
+        if (dateToday <= start) {
+          setTimePast([])
+        } else {
+          var tabTimePast = eachHourOfInterval({
+            start: setHours(setMinutes(new Date(timeDate), 30), 8),
+            end: dateToday
+          })
+          setTimePast(tabTimePast)
+        }
     } else {
       setTimePast([])
     }
