@@ -11,7 +11,7 @@ const Presentation = ({className}) => {
 
         <div className={"identity"}>
           <img src={profilePicture} style={{paddingRight : "10px"}}></img>
-          <h4>Nicolas Caillouet
+          <h4 style={{margin : '0'}}>Nicolas Caillouet
           <br />Ingénieur Business Performance</h4>
         </div>
 
@@ -36,13 +36,23 @@ export default styled(Presentation)`
   justify-self : center;
   display : flex;
   flex-direction : column;
-  align-items : start;
+  align-self : top;
   text-align : center;
 
 
   img {
-    width : 100px;
+    max-width : 100px;
     height : auto;
+  }
+
+  @media (max-width : 768px) {
+    padding : 30px 0;
+
+
+    img{
+      max-width : 75px;
+      height : auto;
+    }
   }
 
   p {
@@ -54,6 +64,8 @@ export default styled(Presentation)`
     display : flex;
     flex-direction : row;
     text-align : left;
+    align-items : center;
+
   }
 
   .infoEvent {

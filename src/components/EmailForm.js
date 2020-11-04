@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 
 import addMinutes from 'date-fns/addMinutes'
 
+import styled from 'styled-components'
 
 import '../App.css';
 
-const EmailForm = ({timeDate}) => {
+const EmailForm = ({timeDate, className}) => {
 
   const [email, setEmail] = useState("")
+  const [nom, setNom] = useState("")
   const [timeDateEnd, setTimeDateEnd] = useState("")
 
   const handleChange = (event) => {
@@ -30,10 +32,16 @@ const EmailForm = ({timeDate}) => {
   }, [timeDate])
 
   return (
-    <div>
+    <div className={className}>
+      <h4>Indiquez vos informations</h4>
       <form
         className='formResa'
         onSubmit={(event) => handleSubmit(event)}>
+        <input
+          type="text"
+          className = 'inputResa'
+          onChange = {(event) => setNom(event.target.value)}
+          placeholder='votre nom'/>
         <input
           type="email"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -52,4 +60,6 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(EmailForm)
+export default connect(mapStateToProps)(styled(EmailForm)`
+  margin-top : 1em;
+`)

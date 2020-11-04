@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
+
+
 const Header = ({className}) => {
   return (
     <div className={className}>
-      <p>Rendez-vous de 30min avec Nicolas</p>
+      <h2 className={'title'}>Rendez-vous de 30min avec Nicolas</h2>
+
     </div>
   )
 }
@@ -14,11 +17,23 @@ export default styled(Header) `
   grid-row-end : 2;
   grid-column-start : 1;
   grid-column-end : span end;
+  text-align : center;
 
-  p {
-    color : #76797c;
-    font-size : 1.7em;
-    font-weight : 600;
+  .title {
+    position : relative;
+  }
+
+  .title:after{
+    position : absolute;
+    content : "";
+    height : 3px;
+    width : 50%;
+    bottom : -10px;
+    margin : 0 auto;
+    left : 0;
+    right : 0;
+
+    background : #FF8054;
   }
 
 `

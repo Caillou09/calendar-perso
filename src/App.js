@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 
 import EmailForm from './components/EmailForm'
-import Calendar from './components/Calendar'
+import CalendarForm from './components/CalendarForm'
 import AreaButton from './components/AreaButton'
 import Presentation from './components/Presentation'
 import SectionPrincipale from './themes/SectionPrincipale'
@@ -11,6 +11,8 @@ import Header from './components/Header'
 
 import { Provider } from 'react-redux'
 import store from './redux/store'
+
+import logoSmile from './images/logo_smile.png'
 
 
 
@@ -23,15 +25,17 @@ const App = () => {
       <SectionPrincipale>
         <Header></Header>
         <Presentation></Presentation>
-        <div className='box'>
-          <div className='areabutton'>
-            <Calendar></Calendar>
-          </div>
-          <div style={{paddingTop : "50px"}}>
-            <EmailForm>
-            </EmailForm>
-          </div>
-        </div>
+        <CalendarForm></CalendarForm>
+        <a target="_blank" href="https://www.smile.eu/fr" style={{
+            gridRowStart : "1",
+            gridColumnStart : 2,
+            justifySelf : 'end',
+
+          }}>
+          <img src={logoSmile} style={{
+            width : '100px',
+            height : 'auto'}}/>
+        </a>
       </SectionPrincipale>
     </ContainerPrincipal>
     </Provider>

@@ -11,10 +11,10 @@ const SectionPrincipale = styled.div`
 
   @media (min-width : 768px) {
     display : grid;
-
-    grid-template-columns : 35% 60%;
+    grid-template-columns : 40% 58%;
     grid-template-rows : 40px auto;
     column-gap : 40px;
+    row-gap : 50px;
     max-width : 75vw;
     justify-items : center;
     margin : auto;
