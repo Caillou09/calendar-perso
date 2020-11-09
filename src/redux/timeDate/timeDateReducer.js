@@ -2,7 +2,8 @@ import {GET_TIME_DATE} from './timeDateTypes'
 import getTimeDate from './timeDateActions'
 
 const initialState = {
-  timeDate :''
+  timeDate :'',
+  selected : false
 }
 
 const getTimeDateReducer = (state = initialState, action) => {

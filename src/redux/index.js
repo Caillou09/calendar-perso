@@ -1,3 +1,5 @@
 export { fetchEventsOfDay } from './eventsOfDay/eventsOfDayActions'
 export { getStartDate } from './startDate/startDateActions'
 export { getTimeDate } from './timeDate/timeDateActions'
+export { getStep } from './step/stepActions'
+export { showButtonDate } from './showButtonDate/showButtonDateActions'

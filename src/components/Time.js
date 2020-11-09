@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import { connect } from 'react-redux'
-import { getTimeDate } from '../redux'
+import { getTimeDate, showButtonDate } from '../redux'
 
 import DatePicker from "react-datepicker"
 import {registerLocale} from "react-datepicker"
@@ -11,6 +11,10 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval'
+import getDay from 'date-fns/getDay'
+import getMonth from 'date-fns/getMonth'
+import getHours from 'date-fns/getHours'
+import getMinutes from 'date-fns/getMinutes'
 
 import "react-datepicker/dist/react-datepicker.css";
 import './Agenda.css';
@@ -21,15 +25,19 @@ registerLocale("fr", fr)
 
 
 
-const Time = ({className, getDate, getData, pickedStartDate, eventsOfDay, getTimeDate}) => {
+const Time = ({className, getDate, getData, startDate, eventsOfDay, getTimeDate, showButtonDate}) => {
 
-  const [timeDate, setTimeDate] = useState("")
+  const [timeDate, setTimeDate] = useState('')
   const [eventsPick, setEventsPick] = useState([])
   const [timePast, setTimePast] = useState([])
+  const [ButtonDate, setButtonDate] = useState(false)
+
+  const daysArray = ['Dimanche', 'Lundi', 'Mardi', 'Mercerdi', 'Jeudi', 'Vendredi', 'Samedi']
+  const monthsArray = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 
   useEffect( () => {
-    setTimeDate(pickedStartDate)
-  }, [pickedStartDate])
+    setTimeDate(startDate)
+  }, [startDate])
 
   useEffect( () => {
     setEventsPick(eventsOfDay)
@@ -56,11 +64,11 @@ const Time = ({className, getDate, getData, pickedStartDate, eventsOfDay, getTim
 
   }, [timeDate])
 
-
-  useEffect( () => {
-
-  }, [timePast])
-
+//fonction de gestion de l'événement click sur le timeslot
+const handleChange = (date) => {
+  setTimeDate(date)
+  showButtonDate(true)
+}
 
 //On va chercher les start et end de chaque event dans l'agenda pour les mettre dans un tableau
   const arrayEvents = []
@@ -153,11 +161,12 @@ const Time = ({className, getDate, getData, pickedStartDate, eventsOfDay, getTim
 
   return (
     <div className={className}>
+      <p>{daysArray[getDay(startDate)]} {new Date(startDate).getDate()} {monthsArray[getMonth(startDate)]}</p>
       <DatePicker
         showPopperArrow={false}
         locale='fr'
         selected={timeDate}
-        onChange={(date) => setTimeDate(date)}
+        onChange={(date) => handleChange(date)}
         minTime={setHours(setMinutes(new Date(), 30), 8)}
         maxTime={setHours(setMinutes(new Date(), 30), 18)}
         inline
@@ -179,14 +188,15 @@ const Time = ({className, getDate, getData, pickedStartDate, eventsOfDay, getTim
 
 const mapStateToProps = state => {
   return {
-    pickedStartDate : state.getStartDate.startDate,
+    startDate : state.getStartDate.startDate,
     eventsOfDay : state.eventsOfDay.events
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTimeDate : timeDate => dispatch(getTimeDate(timeDate))
+    getTimeDate : timeDate => dispatch(getTimeDate(timeDate)),
+    showButtonDate : buttonDate => dispatch(showButtonDate(buttonDate))
   }
 }
 

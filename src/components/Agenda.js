@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import { connect } from 'react-redux'
-import { getStartDate, fetchEventsOfDay } from '../redux'
+import { getStartDate, fetchEventsOfDay, showButtonDate } from '../redux'
 
 import DatePicker from "react-datepicker"
 import {registerLocale} from "react-datepicker"
@@ -19,7 +19,14 @@ registerLocale("fr", fr)
 
 
 
-const Agenda = ({className, getData, getStartDate, pickedStartDate, fetchEventsOfDay, eventsOfDay}) => {
+const Agenda = ({
+  className,
+  getStartDate,
+  pickedStartDate,
+  fetchEventsOfDay,
+  eventsOfDay,
+  showButtonDate,
+  buttonDate}) => {
 
   //Fonction pour rendre notclickable les samedi et dimanche
   const isWeekday = date => {
@@ -27,7 +34,7 @@ const Agenda = ({className, getData, getStartDate, pickedStartDate, fetchEventsO
   return day !== 0 && day !== 6;
 };
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(Date.parse(new Date()));
   const [data, setData] = useState("");
 
   const sendDate = (date) => {
@@ -37,6 +44,8 @@ const Agenda = ({className, getData, getStartDate, pickedStartDate, fetchEventsO
     //On set l'heure de la date à 00:00 pour avoir le jour entier
     setStartDate(Date.parse(dateToParse))
 
+    //On set showButtnoDate a false
+    showButtonDate(false)
   }
 
 //Récupération des événements de la date du jour avec netlify functions
@@ -77,7 +86,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getStartDate : startDate => dispatch(getStartDate(startDate)),
-    fetchEventsOfDay : startDate => dispatch(fetchEventsOfDay(startDate))
+    fetchEventsOfDay : startDate => dispatch(fetchEventsOfDay(startDate)),
+    showButtonDate : buttonDate => dispatch(showButtonDate(buttonDate))
   }
 }
 
