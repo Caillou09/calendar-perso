@@ -13,7 +13,7 @@ import getMonth from 'date-fns/getMonth'
 import getHours from 'date-fns/getHours'
 import getMinutes from 'date-fns/getMinutes'
 
-import {Button, Popup} from 'semantic-ui-react'
+import {Button, Popup, Loader, Dimmer, Segment} from 'semantic-ui-react'
 
 import styled from 'styled-components'
 
@@ -23,7 +23,8 @@ const Calendar = ({
   getStep,
   startDate,
   timeDate,
-  buttonDate}) => {
+  buttonDate,
+  active}) => {
 
   const [datePick, setDatePick] = useState(new Date());
   const [dataPick, setDataPick] = useState("");
@@ -41,7 +42,12 @@ const Calendar = ({
       <h4>Sélectionnez la date et l'heure</h4>
       <div className={'classCalendar'}>
         <Agenda/>
-        <Time/>
+        <Dimmer.Dimmable active={active}>
+            <Time/>
+            <Dimmer active={active} inverted>
+              <Loader />
+            </Dimmer>
+        </Dimmer.Dimmable>
       </div>
       <div style={{paddingTop : "20px"}}>
         {
@@ -57,7 +63,7 @@ const Calendar = ({
             centered
             position='top center'
             trigger ={
-              <Button content='' fluid>
+              <Button fluid>
                 Choisir un créneau horaire
               </Button>
             }>
@@ -73,7 +79,8 @@ const mapStateToProps = state => {
   return {
     startDate : state.getStartDate.startDate,
     timeDate : state.getTimeDate.timeDate,
-    buttonDate : state.showButtonDate.buttonDate
+    buttonDate : state.showButtonDate.buttonDate,
+    active : state.eventsOfDay.loading
   }
 }
 

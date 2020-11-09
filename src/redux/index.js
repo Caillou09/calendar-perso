@@ -1,4 +1,4 @@
-export { fetchEventsOfDay } from './eventsOfDay/eventsOfDayActions'
+export { loadEventsOfDayRequest, loadEventsOfDaySuccess, loadEventsOfDayFailure, fetchEventsOfDay } from './eventsOfDay/eventsOfDayActions'
 export { getStartDate } from './startDate/startDateActions'
 export { getTimeDate } from './timeDate/timeDateActions'
 export { getStep } from './step/stepActions'

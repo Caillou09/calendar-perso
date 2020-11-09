@@ -1,10 +1,24 @@
-import { LOAD_EVENTS_OF_DAY } from './eventsOfDayTypes'
+import { LOAD_EVENTS_OF_DAY_REQUEST } from './eventsOfDayTypes'
+import { LOAD_EVENTS_OF_DAY_SUCCESS } from './eventsOfDayTypes'
+import { LOAD_EVENTS_OF_DAY_FAILURE } from './eventsOfDayTypes'
 
-
-export const loadEventsOfDay = (events) => {
+export const loadEventsOfDayRequest = () => {
   return {
-    type : LOAD_EVENTS_OF_DAY,
+    type : LOAD_EVENTS_OF_DAY_REQUEST
+  }
+}
+
+export const loadEventsOfDaySuccess = (events) => {
+  return {
+    type : LOAD_EVENTS_OF_DAY_SUCCESS,
     payload : events
+  }
+}
+
+export const loadEventsOfDayFailure = (error) => {
+  return {
+    type : LOAD_EVENTS_OF_DAY_FAILURE,
+    payload : error
   }
 }
 
@@ -18,7 +32,7 @@ export const fetchEventsOfDay = (startDate) => {
     const dateMaxFormated = (new Date(dateMax)).toISOString()
 
     console.log(JSON.stringify({dateMinFormated, dateMaxFormated}), new Date(startDate).toISOString())
-
+    dispatch(loadEventsOfDayRequest())
     fetch("/.netlify/functions/getEventsOfDay", {
       method: 'POST',
       body : JSON.stringify({
@@ -26,10 +40,13 @@ export const fetchEventsOfDay = (startDate) => {
       })
     })
     .then(response => response.json())
-    .then(
-      (data) => {
+    .then(data => {
         const events = data.infosCalOfDay
-        dispatch(loadEventsOfDay(events))
+        dispatch(loadEventsOfDaySuccess(events))
+      })
+      .catch(error => {
+        const errorMsg = error;
+        dispatch(loadEventsOfDayFailure(error))
       })
 
   }

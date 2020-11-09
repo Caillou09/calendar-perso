@@ -159,10 +159,15 @@ const handleChange = (date) => {
     return arrayDatesFormated
   }
 
+  let handleClass = () => {
+    return "loader"
+  }
+
   return (
     <div className={className}>
       <p>{daysArray[getDay(startDate)]} {new Date(startDate).getDate()} {monthsArray[getMonth(startDate)]}</p>
       <DatePicker
+        timeClassName = {handleClass}
         showPopperArrow={false}
         locale='fr'
         selected={timeDate}
@@ -202,4 +207,7 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(styled(Time)`
 margin : 1em;
+display : flex;
+flex-direction : column;
+align-items : center;
 `)
