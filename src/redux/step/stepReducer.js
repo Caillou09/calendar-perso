@@ -3,7 +3,7 @@ import {GET_STEP} from './stepTypes'
 import getStep from './stepActions'
 
 const initialState = {
-  step : 1
+  step : true
 }
 
 const getStepReducer = (state = initialState, action) => {

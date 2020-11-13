@@ -1,0 +1,20 @@
+.emailForm-enter {
+opacity: 0.01;
+}
+
+.emailForm-enter .emailForm-enter-active {
+opacity: 1;
+transition: opacity 300ms ease-in;
+}
+
+.emailForm-leave {
+  opacity: 1;
+
+}
+
+.emailForm-leave .emailForm-leave-active {
+  opacity: 0.01;
+
+  transition: opacity 100ms ease-in;
+
+}

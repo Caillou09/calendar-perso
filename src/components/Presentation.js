@@ -2,10 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import profilePicture from '../images/image_nico.png'
 
+import { connect } from 'react-redux'
 
 import { Icon } from 'semantic-ui-react'
 
-const Presentation = ({className}) => {
+import getDay from 'date-fns/getDay'
+import getDate from 'date-fns/getDate'
+import getMonth from 'date-fns/getMonth'
+import getHours from 'date-fns/getHours'
+import getMinutes from 'date-fns/getMinutes'
+
+const Presentation = ({className, showEmailForm, timeDate}) => {
+
+  const daysArray = ['Dimanche', 'Lundi', 'Mardi', 'Mercerdi', 'Jeudi', 'Vendredi', 'Samedi']
+  const monthsArray = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+
   return (
     <div className={className}>
 
@@ -18,19 +29,29 @@ const Presentation = ({className}) => {
         <div className={"infoEvent"}>
           <p><Icon inverted color='blue' name = 'time' circular fitted/> 30 minutes</p>
           <p><Icon color='blue' name = 'setting' circular fitted inverted/> à distance via le lien dans le mail</p>
+          { showEmailForm &&
+            <p><Icon color='blue' name = 'calendar check outline' circular fitted inverted/> {daysArray[getDay(timeDate)]} {getDate(timeDate)} {monthsArray[getMonth(timeDate)]} à {getHours(timeDate)}h{getMinutes(timeDate) !== 0 ? getMinutes(timeDate) : "00" }</p>
+          }
         </div>
 
-      <div className={'infoText'}>
+      { showEmailForm === false && <div className={'infoText'}>
         <p>Bonjour,</p>
         <p>Vous pouvez ici prendre rendez-vous directement dans mon agenda à un créneau qui vous arrange.</p>
         <p>L'objectif de cet échange est de présenter Smile rapidement et d'échanger sur votre périmètre d'activité.</p>
-      </div>
+      </div>}
 
     </div>
   )
 }
 
-export default styled(Presentation)`
+const mapStateToProps = state => {
+  return {
+    timeDate : state.getTimeDate.timeDate,
+    showEmailForm : state.showEmailForm.showEmailForm
+  }
+}
+
+export default connect(mapStateToProps, null)(styled(Presentation)`
   grid-row-start : 2;
   grid-column-start : 1;
   justify-self : center;
@@ -81,4 +102,4 @@ export default styled(Presentation)`
     font-weight : 300;
   }
 
-`
+`)

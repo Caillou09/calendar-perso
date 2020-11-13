@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import {connect} from 'react-redux'
-import {getStep} from '../redux'
+import {getStep, setEmailForm} from '../redux'
 
 import Agenda from "./Agenda"
 import Time from "./Time"
@@ -24,54 +24,62 @@ const Calendar = ({
   startDate,
   timeDate,
   buttonDate,
-  active}) => {
+  active,
+  setEmailForm}) => {
 
   const [datePick, setDatePick] = useState(new Date());
   const [dataPick, setDataPick] = useState("");
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(true)
+  const [showEmailForm, setShowEmailForm] = useState(false)
 
   const daysArray = ['Dimanche', 'Lundi', 'Mardi', 'Mercerdi', 'Jeudi', 'Vendredi', 'Samedi']
   const monthsArray = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 
   useEffect( () => {
     getStep(step)
+    setEmailForm(showEmailForm)
   }, [step])
 
   return (
-    <div className={className}>
-      <h4>Sélectionnez la date et l'heure</h4>
-      <div className={'classCalendar'}>
-        <Agenda/>
-        <Dimmer.Dimmable active={active}>
-            <Time/>
-            <Dimmer active={active} inverted>
-              <Loader />
-            </Dimmer>
-        </Dimmer.Dimmable>
-      </div>
-      <div style={{paddingTop : "20px"}}>
-        {
-          buttonDate == true ?
-          <Button onClick = {() => setStep(2)} fluid>
-            Choisir le {daysArray[getDay(startDate)]} {getDate(startDate)} {monthsArray[getMonth(startDate)]} à {getHours(timeDate)}h{getMinutes(timeDate) !== 0 ? getMinutes(timeDate) : "00" }
-          </Button>
-          :
-          <Popup
-            content="Vous n'avez pas choisi d'horaire"
-            on='click'
-            pinned
-            centered
-            position='top center'
-            trigger ={
-              <Button fluid>
-                Choisir un créneau horaire
-              </Button>
-            }>
-          </Popup>
-        }
+          <div className={className}>
+            <h4>Sélectionnez la date et l'heure</h4>
+            <div className={'classCalendar'}>
+              <Agenda/>
+              <Dimmer.Dimmable active={active}>
+                  <Time/>
+                  <Dimmer active={active} inverted>
+                    <Loader />
+                  </Dimmer>
+              </Dimmer.Dimmable>
+            </div>
+            <div style={{paddingTop : "20px", display : 'flex', justifyContent : 'center'}}>
+              {
+                buttonDate == true ?
+                <Button fluid = {false} onClick = {() => {
+                    setStep(false)
+                    setShowEmailForm(true)
+                  }}>
+                  Choisir le {daysArray[getDay(startDate)]} {getDate(startDate)} {monthsArray[getMonth(startDate)]} à {getHours(timeDate)}h{getMinutes(timeDate) !== 0 ? getMinutes(timeDate) : "00" }
+                </Button>
+                :
+                <Popup
+                  content="Vous n'avez pas choisi d'horaire"
+                  on='click'
+                  pinned
+                  centered
+                  position='top center'
+                  trigger ={
+                    <Button fluid = {false} style={{textAlign : 'middle'}}>
+                      Choisir un créneau horaire
+                    </Button>
+                  }>
+                </Popup>
+              }
 
-      </div>
-    </div>
+            </div>
+          </div>
+
+
   )
 }
 
@@ -86,7 +94,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getStep : step => dispatch(getStep(step))
+    getStep : step => dispatch(getStep(step)),
+    setEmailForm : showEmailForm => dispatch(setEmailForm(showEmailForm))
+
   }
 }
 
