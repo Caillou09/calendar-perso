@@ -37,7 +37,8 @@ exports.handler = async (event, context) => {
             dateTime : timeDate,
             timeZone : "Europe/Paris"
           },
-          attendees : [{email}]
+          attendees : [{email}],
+          summary : 'Présentation Smile'
         }
 
       });

@@ -6,6 +6,7 @@ import getTimeDateReducer from './timeDate/timeDateReducer'
 import getStepReducer from './step/stepReducer'
 import showButtonDateReducer from './showButtonDate/showButtonDateReducer'
 import showEmailFormReducer from './showEmailForm/showEmailFormReducer'
+import setSuccessReducer from './successMsg/successMsgReducer'
 
 const rootReducer = combineReducers({
   eventsOfDay : eventsOfDayReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   getTimeDate : getTimeDateReducer,
   getStep : getStepReducer,
   showButtonDate : showButtonDateReducer,
-  showEmailForm : showEmailFormReducer
+  showEmailForm : showEmailFormReducer,
+  setSuccess : setSuccessReducer
 })
 
 export default rootReducer

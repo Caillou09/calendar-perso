@@ -12,7 +12,7 @@ import getMonth from 'date-fns/getMonth'
 import getHours from 'date-fns/getHours'
 import getMinutes from 'date-fns/getMinutes'
 
-const Presentation = ({className, showEmailForm, timeDate}) => {
+const Presentation = ({className, showEmailForm, timeDate, success, step}) => {
 
   const daysArray = ['Dimanche', 'Lundi', 'Mardi', 'Mercerdi', 'Jeudi', 'Vendredi', 'Samedi']
   const monthsArray = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
@@ -29,12 +29,12 @@ const Presentation = ({className, showEmailForm, timeDate}) => {
         <div className={"infoEvent"}>
           <p><Icon inverted color='blue' name = 'time' circular fitted/> 30 minutes</p>
           <p><Icon color='blue' name = 'setting' circular fitted inverted/> à distance via le lien dans le mail</p>
-          { showEmailForm &&
+          { (showEmailForm || success) &&
             <p><Icon color='blue' name = 'calendar check outline' circular fitted inverted/> {daysArray[getDay(timeDate)]} {getDate(timeDate)} {monthsArray[getMonth(timeDate)]} à {getHours(timeDate)}h{getMinutes(timeDate) !== 0 ? getMinutes(timeDate) : "00" }</p>
           }
         </div>
 
-      { showEmailForm === false && <div className={'infoText'}>
+      { (step === true) && <div className={'infoText'}>
         <p>Bonjour,</p>
         <p>Vous pouvez ici prendre rendez-vous directement dans mon agenda à un créneau qui vous arrange.</p>
         <p>L'objectif de cet échange est de présenter Smile rapidement et d'échanger sur votre périmètre d'activité.</p>
@@ -47,7 +47,9 @@ const Presentation = ({className, showEmailForm, timeDate}) => {
 const mapStateToProps = state => {
   return {
     timeDate : state.getTimeDate.timeDate,
-    showEmailForm : state.showEmailForm.showEmailForm
+    showEmailForm : state.showEmailForm.showEmailForm,
+    success : state.setSuccess.success,
+    step : state.getStep.step
   }
 }
 

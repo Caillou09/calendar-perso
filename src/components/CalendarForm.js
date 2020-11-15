@@ -10,9 +10,9 @@ import './animations.css'
 import Calendar from './Calendar'
 import EmailForm from './EmailForm'
 
-import CSSTransition from 'react-transition-group/CSSTransition'
+import { Message } from 'semantic-ui-react'
 
-const CalendarForm = ({className, step, showEmailForm, getStep}) => {
+const CalendarForm = ({className, step, showEmailForm, getStep, success}) => {
 
   return (
     <div className={className}>
@@ -21,8 +21,18 @@ const CalendarForm = ({className, step, showEmailForm, getStep}) => {
       }
 
       { showEmailForm &&
-          <EmailForm></EmailForm>
+        <EmailForm></EmailForm>
       }
+
+      { success &&
+        <Message
+          success
+          header='Demande de rendez-vous envoyée'
+          content="Vous allez recevoir l'invitation dans votre boite mail"
+        />
+      }
+
+
 
     </div>
   )
@@ -31,7 +41,8 @@ const CalendarForm = ({className, step, showEmailForm, getStep}) => {
 const mapStateToProps = state => {
   return {
     step : state.getStep.step,
-    showEmailForm : state.showEmailForm.showEmailForm
+    showEmailForm : state.showEmailForm.showEmailForm,
+    success : state.setSuccess.success
   }
 }
 
@@ -45,7 +56,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(styled(CalendarForm)`
 grid-row-start : 2;
 grid-column-start : 2;
-align-self : top;
+align-self : start;
 padding : 20px;
 
 `)
