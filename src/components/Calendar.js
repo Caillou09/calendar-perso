@@ -31,6 +31,7 @@ const Calendar = ({
   const [dataPick, setDataPick] = useState("");
   const [step, setStep] = useState(true)
   const [showEmailForm, setShowEmailForm] = useState(false)
+  const [media, setMedia] = useState(window.matchMedia("(max-width: 768px)").matches)
 
   const daysArray = ['Dimanche', 'Lundi', 'Mardi', 'Mercerdi', 'Jeudi', 'Vendredi', 'Samedi']
   const monthsArray = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
@@ -46,11 +47,12 @@ const Calendar = ({
             <div className={'classCalendar'}>
               <Agenda/>
               <Dimmer.Dimmable active={active}>
-                  <Time/>
+                <Time />
                   <Dimmer active={active} inverted>
                     <Loader />
-                  </Dimmer>
+                </Dimmer>
               </Dimmer.Dimmable>
+
             </div>
             <div style={{paddingTop : "20px", display : 'flex', justifyContent : 'center'}}>
               {
